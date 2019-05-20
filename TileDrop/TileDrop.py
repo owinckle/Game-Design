@@ -65,7 +65,7 @@ class Game:
 		pygame.draw.rect(self.screen, self.colors.blue, (self.enemy.x, self.enemy.y, self.enemy.size, self.enemy.size))
 
 def main():
-	game	= Game("PyGame", 300, 600)
+	game	= Game("TileDrop", 300, 600)
 
 	i = 0
 	while game.active:
