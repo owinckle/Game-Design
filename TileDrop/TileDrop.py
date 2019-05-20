@@ -23,9 +23,11 @@ class Enemy:
 	def update(self):
 		if self.y >= 0 and self.y < self.height:
 			self.y += self.speed
+			return 0
 		else:
 			self.y = 0
 			self.x = randint(0, self.width - self.size)
+			return 1
 
 class Game:
 	def __init__(self, name, width, height):
@@ -37,6 +39,7 @@ class Game:
 		self.clock	= pygame.time.Clock()
 		self.screen	= pygame.display.set_mode((width, height))
 		self.colors	= Colors()
+		self.score	= 0
 
 		# Player
 		self.player = Player(width, height)
@@ -53,9 +56,10 @@ class Game:
 			if (self.enemy.y >= self.player.y and self.enemy.y < (self.player.y + self.player.size)) or \
 			(self.player.y >= self.enemy.y and self.player.y < (self.enemy.y + self.enemy.size)):
 				self.active = False
+				print("Final Score: %d" % (self.score))
 
 	def draw(self):
-		self.enemy.update()
+		self.score += self.enemy.update()
 		self.screen.fill(self.colors.black)
 		pygame.draw.rect(self.screen, self.colors.red, (self.player.x, self.player.y, self.player.size, self.player.size))
 		pygame.draw.rect(self.screen, self.colors.blue, (self.enemy.x, self.enemy.y, self.enemy.size, self.enemy.size))
