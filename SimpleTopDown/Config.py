@@ -6,7 +6,8 @@ class Config:
 
 		if lines:
 			# Attributes
-			array	= ["name", "width", "height", "fps", "tilesize", "player_speed"]
+			array	= ["name", "width", "height", "fps", "tilesize", "player_speed", "player_0",
+			"player_1", "player_2", "player_3", "sprite_bush", "sprite_grass"]
 
 			# Loop & set config
 			for line in lines:

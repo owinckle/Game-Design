@@ -3,4 +3,4 @@ Repository made to keep track of my learning curve in game developpement.
 
 # Games (in creation order)
 * TileDrop - Dodge the falling tiles, made with Python3 and Pygame
-* PikaRPG - Mini RPG Game made with Python3 and Pygame (Ongoing)
+* SimpleTopDown - Simple Top Down View made with Python3 and Pygame

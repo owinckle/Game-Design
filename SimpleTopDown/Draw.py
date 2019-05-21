@@ -11,6 +11,8 @@ def grid(game):
 def draw(game):
 	game.screen.fill(DARKGREY)
 	grid(game)
-	game.player.update()
-	game.sprites.draw(game.screen)
+	game.sprites.update()
+	for sprite in game.sprites:
+		game.screen.blit(sprite.image, game.camera.apply(sprite))
+	game.camera.update(game.player)
 	pg.display.flip()
