@@ -1,0 +1,6 @@
+set name = "PikaRPG"
+set width = "1024"
+set height = "768"
+set fps = "60"
+set tilesize = "32"
+set player_speed = "300"
