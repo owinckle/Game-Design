@@ -3,6 +3,7 @@ from Config import *
 from Events import *
 from Player import *
 from Mapping import *
+from Scenes import *
 vec = pg.math.Vector2
 
 class PikaEngine():
@@ -13,34 +14,42 @@ class PikaEngine():
 		self.running	= True
 		self.clock		= pg.time.Clock()
 		self.screen		= pg.display.set_mode((self.config.width, self.config.height))
+		pg.display.set_caption(self.config.name)
 		self.init_sprites()
 		self.currentMap	= "init.txt"
+		self.currentScene	= scene_start()
 		self.load("init.txt")
 
 	def init_sprites(self):
 		self.sprites	= pg.sprite.Group()
 		self.obstacles	= pg.sprite.Group()
 		self.ground		= pg.sprite.Group()
-		self.teleporter	= pg.sprite.Group()
 		self.npc		= pg.sprite.Group()
+		self.objects	= pg.sprite.Group()
+		self.teleporter	= pg.sprite.Group()
 
 	def load(self, map):
 		self.map		= Map(self, map)
 		self.currentMap	= map
+		npc_index		= 0
 		for row, tiles in enumerate(self.map.data):
 			for col, tile in enumerate(tiles):
-				if tile == "P":
-					self.p_pos = vec(col, row)
-				elif ord(tile) >= 97 and ord(tile) <= 122:
+				if ord(tile) >= 97 and ord(tile) <= 122:
 					Ground(self, col, row, ord(tile) - 97)
 				else:
-					Ground(self, col, row, 0)
+					Ground(self, col, row, self.currentScene.default_ground)
 				if ord(tile) >= 49 and ord(tile) <= 57:
 					Obstacle(self, col, row, ord(tile) - 49)
-				if ord(tile) == 88:
-					Teleporter(self, col, row)
-				if tile == "N":
-					Npc(self, col, row)
+				if ord(tile) >= 65 and ord(tile) <= 90:
+					if tile == "P":
+						self.p_pos = vec(col, row)
+					elif tile == "N":
+						Npc(self, col, row, npc_index)
+						npc_index += 1
+					elif tile == "X":
+						Teleporter(self, col, row)
+					else:
+						Objects(self, col, row, ord(tile) - 65)
 		self.player	= Player(self, self.p_pos.x, self.p_pos.y)
 
 	def draw(self):

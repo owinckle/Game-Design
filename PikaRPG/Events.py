@@ -10,5 +10,4 @@ def key_events(game):
 			if event.key == pg.K_ESCAPE:
 				sys.exit()
 			if event.key == pg.K_e:
-				if game.player.npc_interact():
-					print("Hello Friend")
+				game.currentScene.dialogue(game)

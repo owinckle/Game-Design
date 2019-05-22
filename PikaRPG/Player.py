@@ -32,19 +32,6 @@ class Player(pg.sprite.Sprite):
 				self.vel.y =0
 				self.rect.y = self.pos.y
 
-	def teleport(self):
-		hits = pg.sprite.spritecollide(self, self.game.teleporter, False)
-		if hits:
-			self.game.init_sprites()
-			if self.game.currentMap == "start.txt" or self.game.currentMap == "init.txt":
-				self.game.load("start2.txt")
-			elif self.game.currentMap == "start2.txt":
-				self.game.load("start.txt")
-
-	def npc_interact(self):
-		hits = pg.sprite.spritecollide(self, self.game.npc, False)
-		return hits
-
 	def get_keys(self):
 		self.vel	= vec(0, 0)
 		keys		= pg.key.get_pressed()
@@ -68,11 +55,30 @@ class Player(pg.sprite.Sprite):
 		if self.vel.x	!= 0 and self.vel.y != 0:
 			self.vel	*= 0.7071
 
+	def scene(self):
+		if self.pos.y > self.game.config.height:
+			self.game.currentScene.next_scene(self.game, y=1)
+
+		if self.pos.y < 0 - self.game.config.tilesize:
+			self.game.currentScene.next_scene(self.game, y=-1)
+
+		if self.pos.x > self.game.config.width:
+			self.game.currentScene.next_scene(self.game, x=1)
+
+		if self.pos.x < 0 - self.game.config.tilesize:
+			self.game.currentScene.next_scene(self.game, x=-1)
+
+		if pg.sprite.spritecollide(self, self.game.objects, False):
+			self.game.currentScene.next_scene(self.game, inside=1)
+
+		if pg.sprite.spritecollide(self, self.game.teleporter, False):
+			self.game.currentScene.next_scene(self.game, teleporter=1)
+
 	def update(self):
-		self.teleport()
 		self.get_keys()
 		self.pos += self.vel * self.game.dt
 		self.rect.x = self.pos.x
 		self.collide_with_walls("x")
 		self.rect.y = self.pos.y
 		self.collide_with_walls("y")
+		self.scene()

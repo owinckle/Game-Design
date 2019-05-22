@@ -16,16 +16,20 @@ class Tiles:
 
 		self.obstacles	= []
 		self.obstacles.append("assets/bush.png")
-		self.obstacles.append("assets/tree_1.png")
+		self.obstacles.append("assets/empty_ground.png")
 
-		self.ground	= []
+		self.ground		= []
 		self.ground.append("assets/grass.png")
 		self.ground.append("assets/sand.png")
 		self.ground.append("assets/grass_sand_left_right.png")
 		self.ground.append("assets/grass_sand_top_bottom.png")
+		self.ground.append("assets/wooden_floor.png")
 
-		self.npc	= []
-		self.npc.append("assets/npc1_0.png")
+		self.objects	= []
+		self.objects.append("assets/town_house/tile000.png")
+		self.objects.append("assets/town_house/tile001.png")
+		self.objects.append("assets/town_house/tile002.png")
+		self.objects.append("assets/town_house/tile003.png")
 
 class Colors:
 	def __init__(self):
