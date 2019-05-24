@@ -28,16 +28,18 @@ class PikaEngine():
 		self.objects	= pg.sprite.Group()
 		self.teleporter	= pg.sprite.Group()
 
-	def load(self, map):
-		self.map		= Map(self, map)
-		self.currentMap	= map
-		npc_index		= 0
+	def loadGround(self):
 		for row, tiles in enumerate(self.map.data):
 			for col, tile in enumerate(tiles):
 				if ord(tile) >= 97 and ord(tile) <= 122:
 					Ground(self, col, row, ord(tile) - 97)
 				else:
 					Ground(self, col, row, self.currentScene.default_ground)
+
+	def loadEntites(self):
+		npc_index		= 0
+		for row, tiles in enumerate(self.map.data):
+			for col, tile in enumerate(tiles):
 				if ord(tile) >= 49 and ord(tile) <= 57:
 					Obstacle(self, col, row, ord(tile) - 49)
 				if ord(tile) >= 65 and ord(tile) <= 90:
@@ -52,10 +54,17 @@ class PikaEngine():
 						Objects(self, col, row, ord(tile) - 65)
 		self.player	= Player(self, self.p_pos.x, self.p_pos.y)
 
+	def load(self, map):
+		self.map		= Map(self, map)
+		self.currentMap	= map
+		self.loadGround()
+		self.loadEntites()
+
 	def draw(self):
 		self.screen.fill(self.colors.DARKGREY)
 		self.sprites.draw(self.screen)
 		self.player.update()
+		self.currentScene.animate(self)
 		pg.display.flip()
 
 	def loop(self):

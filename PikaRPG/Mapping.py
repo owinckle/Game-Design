@@ -40,6 +40,7 @@ class Npc(pg.sprite.Sprite):
 		self.groups	= game.sprites, game.npc
 		pg.sprite.Sprite.__init__(self, self.groups)
 		self.game	= game
+		self.idx	= idx
 		self.image	= pg.image.load(game.currentScene.npc[idx]).convert_alpha()
 		self.rect	= self.image.get_rect()
 		self.pos	= vec(x, y)
